@@ -1,0 +1,12 @@
+1.000: Customer 0 arrives
+1.000: Customer 0 service begins (at Counter 0)
+2.000: Customer 0 service ends (at Counter 0)
+2.000: Customer 0 departs
+3.000: Customer 1 arrives
+3.000: Customer 1 service begins (at Counter 0)
+4.000: Customer 1 service ends (at Counter 0)
+4.000: Customer 1 departs
+5.000: Customer 2 arrives
+5.000: Customer 2 service begins (at Counter 0)
+6.000: Customer 2 service ends (at Counter 0)
+6.000: Customer 2 departs

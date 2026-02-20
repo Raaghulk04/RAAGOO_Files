@@ -1,0 +1,10 @@
+1.100: Customer 0 arrives
+1.100: Customer 0 service begins (at Counter 0)
+2.200: Customer 1 arrives
+2.200: Customer 1 departs
+3.100: Customer 0 service ends (at Counter 0)
+3.100: Customer 0 departs
+3.300: Customer 2 arrives
+3.300: Customer 2 service begins (at Counter 0)
+5.300: Customer 2 service ends (at Counter 0)
+5.300: Customer 2 departs
