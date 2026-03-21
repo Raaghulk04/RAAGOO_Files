@@ -83,12 +83,7 @@ public class MazeSolver implements IMazeSolver {
 
 	@Override
 	public Integer numReachable(int k) throws Exception {
-		// Edge case: Invalid k
-		if (!reachableRooms.containsKey(k)) {
-			throw new IllegalArgumentException("Invalid k value");
-		}
-
-		return reachableRooms.get(k);
+		return reachableRooms.getOrDefault(k,0);
 	}
 
 	public static void main(String[] args) {
@@ -99,7 +94,7 @@ public class MazeSolver implements IMazeSolver {
 			IMazeSolver solver = new MazeSolver();
 			solver.initialize(maze);
 
-			System.out.println(solver.pathSearch(0, 0, 4, 3));
+			System.out.println(solver.pathSearch(0, 0, 2, 3));
 			MazePrinter.printMaze(maze);
 
 			for (int i = 0; i <= 9; ++i) {
@@ -111,6 +106,8 @@ public class MazeSolver implements IMazeSolver {
 	}
 
 	private Integer solve(Queue<Point> q) {
+		Integer res = null;
+
 		while (q.peek() != null) {
 			Point currPoint = q.poll();
 
@@ -119,7 +116,7 @@ public class MazeSolver implements IMazeSolver {
 
 			// Found end
 			if (row == endRow && col == endCol) {
-				return getPath(currPoint);
+				res = getPath(currPoint);
 			}
 
 			// Check Neighbours
@@ -145,7 +142,7 @@ public class MazeSolver implements IMazeSolver {
 		}
 		
 		// Edge Case: traverse finish and cant find End
-		return null;
+		return res;
 	}
 
 	private Integer getPath(Point currPoint) {
