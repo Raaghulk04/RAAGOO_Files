@@ -75,7 +75,6 @@ public class MazeSolver implements IMazeSolver {
 
 		// Update source
 		visited[startRow][startCol] = true;
-		maze.getRoom(startRow, startCol).onPath = true;
 		reachableRooms.putIfAbsent(q.peek().step, 1);
 
 		return solve(q);
@@ -146,13 +145,13 @@ public class MazeSolver implements IMazeSolver {
 	}
 
 	private Integer getPath(Point currPoint) {
+		// update path
+		maze.getRoom(currPoint.x, currPoint.y).onPath = true;
+		
 		// Edge Case: reach startPoint
 		if (currPoint.prev == null) {
 			return 0;
 		}
-
-		// update path
-		maze.getRoom(currPoint.x, currPoint.y).onPath = true;
 
 		return 1 + getPath(currPoint.prev);
 	}
