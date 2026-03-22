@@ -41,7 +41,6 @@ public class MarkovModel {
 	 * Builds the Markov Model based on the specified text string.
 	 */
 	public void initializeText(String text) {
-		text = text.replace("\0", "");
         // clear the map, since this method can be called multiple times and is expected to build a new Markov Model each time
         map.clear();
 		// Build the Markov model here
