@@ -1,0 +1,7 @@
+*.class
+.*.sw?
+.*.err
+.*.out
+*.un~
+cs2030s/fp/*.class
+cs2030s/fp/.*.sw?
