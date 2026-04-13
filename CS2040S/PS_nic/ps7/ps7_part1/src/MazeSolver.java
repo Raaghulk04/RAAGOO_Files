@@ -11,7 +11,6 @@ public class MazeSolver implements IMazeSolver {
 		{ 0, -1 } // West
 	};
 	private Maze maze;
-	private boolean solved;
 	private boolean[][] visited;
 	private int endRow, endCol;
 	private HashMap<Integer, Integer> reachableRooms;
@@ -31,7 +30,6 @@ public class MazeSolver implements IMazeSolver {
 	}
 
 	public MazeSolver() {
-		solved = false;
 		maze = null;
 	}
 
@@ -39,7 +37,6 @@ public class MazeSolver implements IMazeSolver {
 	public void initialize(Maze maze) {
 		this.maze = maze;
 		this.visited = new boolean[maze.getRows()][maze.getColumns()];
-		this.solved = false;
 	}
 
 	@Override

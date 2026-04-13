@@ -12,7 +12,8 @@ public class MazeSolverWithPower implements IMazeSolverWithPower {
 	};
 	private Maze maze;
 	private boolean[][][] visited;
-	private int endRow, endCol, startingPower;
+	private boolean[][] visitedRoom;
+	private int endRow, endCol;
 	private HashMap<Integer, Integer> reachableRooms;
 
 	private class Point {
@@ -38,7 +39,7 @@ public class MazeSolverWithPower implements IMazeSolverWithPower {
 	@Override
 	public void initialize(Maze maze) {
 		this.maze = maze;
-
+		this.visitedRoom = new boolean[maze.getRows()][maze.getColumns()];
 	}
 
 	@Override
@@ -64,17 +65,17 @@ public class MazeSolverWithPower implements IMazeSolverWithPower {
 		// Initialize visited
 		this.visited = new boolean[this.maze.getRows()][this.maze.getColumns()][startingPower + 1];
 
-		// set all onpath back to false
+		// set all onpath back to false and visitedRoom
 		for (int i = 0; i < this.maze.getRows(); ++i) {
 			for (int j = 0; j < this.maze.getColumns(); ++j) {
 				maze.getRoom(i, j).onPath = false;
+				this.visitedRoom[i][j] = false;
 			}
 		}
 
 		// set End and startingPower
 		this.endRow = endRow;
 		this.endCol = endCol;
-		this.startingPower = startingPower;
 
 		// Initialize a new queue for BFS
 		Queue<Point> q = new ArrayDeque<Point>();
@@ -85,6 +86,7 @@ public class MazeSolverWithPower implements IMazeSolverWithPower {
 
 		// Update source
 		visited[startRow][startCol][startingPower] = true;
+		visitedRoom[startRow][startCol] = true;
 		reachableRooms.putIfAbsent(q.peek().step, 1);
 
 		return solve(q);
@@ -96,7 +98,7 @@ public class MazeSolverWithPower implements IMazeSolverWithPower {
 			IMazeSolverWithPower solver = new MazeSolverWithPower();
 			solver.initialize(maze);
 
-			System.out.println(solver.pathSearch(0, 0, 4, 3, 2));
+			System.out.println(solver.pathSearch(0, 0, 4, 3, 4));
 			MazePrinter.printMaze(maze);
 
 			for (int i = 0; i <= 9; ++i) {
@@ -147,11 +149,6 @@ public class MazeSolverWithPower implements IMazeSolverWithPower {
 					if (!visitedBefore(neighPoint)) {
 						reachableRooms.put(neighPoint.step, reachableRooms.getOrDefault(neighPoint.step, 0) + 1);					
 					}
-
-					// set all power lower than current to visited, does not make sense to visit same room with lesser power
-					for (int i = neighPoint.power - 1; i > -1; i--){
-						this.visited[neighPoint.row][neighPoint.col][i] = true;
-					}
 				}
 			}
 		}
@@ -162,16 +159,12 @@ public class MazeSolverWithPower implements IMazeSolverWithPower {
 
 	private boolean visitedBefore(Point neighPoint) {
 		// check if visitedBefore by higher power or lower power, then set all lower power to visited afterwards
-		for (int i = 0; i <= startingPower; i++) {
-			if (i == neighPoint.power) {
-				continue;
-			}
-
-			// update if visited before
-			if (this.visited[neighPoint.row][neighPoint.col][i]) {
-				return true;
-			}
+		if (visitedRoom[neighPoint.row][neighPoint.col]) {
+			return true;
 		}
+
+		visitedRoom[neighPoint.row][neighPoint.col] = true;
+
 		return false;
 	}
 
